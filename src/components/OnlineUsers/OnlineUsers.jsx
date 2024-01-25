@@ -10,7 +10,7 @@ function OnlineUsers({ setCurrentChat, user, conversations }) {
   const [onlineUsers, setOnlineUsers] = useState(null)
   useEffect(() => {
 
-    setOnlineUsers(onlineUsers1.filter(oUser => oUser.userId != user._id))
+    setOnlineUsers(onlineUsers1?.filter(oUser => oUser.userId != user._id))
 
 
   }, [onlineUsers1])
