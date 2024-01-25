@@ -1,0 +1,120 @@
+.chatWindowBody {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: row;
+
+
+}
+
+.chatWindow {
+    height: 100%;
+    width: 100%;
+
+}
+
+.topChatWindow {
+    width: auto;
+    /* background-color: #392988; */
+    background-color: #080420;
+    height: 8%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5em;
+    color: white;
+   
+}
+
+.messagesDisplay {
+    width: auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    /* padding: 0.5em; */
+    overflow-y: scroll;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    /* background-color: #d2cae0; */
+    position: relative;
+    /* background-color: rgba(227, 183, 247,0.5); */
+    background-color: rgba(8, 4, 32,0.5)
+}
+
+.chatInput {
+    height: 10%;
+    width: auto;
+    /* background-color: #392988; */
+    background-color: #080420;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
+    color: white;
+
+}
+
+.textArea {
+    border-radius: 0.5em;
+    width: 90%;
+    height: 30%;
+    font-size: 1.3em;
+    padding: 0.5em;
+    background-color: #ffffff34;
+    color:white;
+}
+
+.conversationMenu {
+    width: 0;
+    height: 100%;
+    /* margin-right: -100%; */
+    background-color: #080420;
+    transition: 850ms;
+
+}
+
+.conversationMenu.active {
+    width: 40%;
+    display: flex;
+    /* margin-right: 0; */
+    transition: 500ms;
+}
+
+.textInput {
+    display: flex;
+    width: 100%;
+    height: 50%;
+    margin-bottom: 1em;
+    flex-direction: row;
+}
+.typingUsersContainer{
+    display: flex;
+   align-items: center;
+   position: relative;
+   
+}
+.typingUsersContainer .typingText{
+    position: relative;
+    display: inline-block;
+    animation: animate 1s ease-in-out infinite;
+    animation-delay: calc(0.1s * var(--i));
+    color: white;
+    
+}
+
+@keyframes animate 
+{
+    0%{
+        transform: translateY(0px);
+    }
+    20%{
+       transform: translateY(-3px); 
+    }
+    40%,100%{
+        transform: translateY(0px);
+    }
+}

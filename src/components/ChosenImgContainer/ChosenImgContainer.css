@@ -1,0 +1,26 @@
+.chosenImgContainer {
+    height: 12%;
+    background-color: rgba(227, 183, 247,0.5);
+    width: auto;
+    display: flex;
+    gap: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
+    align-items: center;
+    position: relative;
+  
+    flex-direction: row;
+    overflow-x: scroll;
+}
+.closeViewChosenImg{
+    position: absolute;
+    
+    top:0;
+    right:0;
+    cursor: pointer;
+}
+.chosenImg{
+    display: flex;
+    color: white;
+    position: relative;
+}

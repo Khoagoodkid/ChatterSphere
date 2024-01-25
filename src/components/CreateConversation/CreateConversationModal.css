@@ -1,0 +1,100 @@
+.createConversationBody{
+    position: absolute;
+    top: 0;
+    bottom:0;
+    left:0;
+    right:0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.createConversationModal{
+    width: 30%;
+    height: 50%;
+ 
+    background-color: white;
+ 
+    border: 0.2em solid black;
+    padding: 1em;
+    padding-left: 2em;
+    display: flex;
+    flex-direction: column;
+}
+.filteredUser{
+    display: flex;
+    flex-direction: row;
+    margin-top: 0.5em;
+    align-items: center;
+    gap:0.5em;
+    cursor: pointer;
+    width: auto;
+    height: 30%;
+   
+}
+.filteredUser:hover{
+    background-color: gray;
+}
+.filteredUsersContainer{
+    width: 100%;
+    height: 30%;
+    
+    overflow-y: scroll;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+::-webkit-scrollbar{
+    display: none;
+}
+.membersContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+ 
+}
+.membersContainer .membersDisplay{
+    width: 100%;
+    height: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    box-sizing: border-box;
+    overflow-y: scroll;
+}
+.membersContainer .memberCard{
+    box-shadow: 10px 10px 8px #888888;
+    width: auto;
+    height: 30%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 0.5em;
+    padding: 0.1em;
+    justify-content: space-between;
+    
+}
+.memberInfo{
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+.createConversationModal .featureBtn{
+    width: 100%;
+    height: 10%;
+
+    display: flex;
+    justify-content: space-around;
+}
+.createConversationModal .featureBtn .btn{
+    width: 40%;
+    background-color: #888888;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+.membersContainer .groupName {
+    display: flex;
+    gap: 2em;
+    align-items: center;
+}

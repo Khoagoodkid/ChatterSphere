@@ -1,0 +1,19 @@
+.welcomeBody{
+    display: flex;
+    
+    align-items: center;
+    height: 90%;
+    flex-direction: column;
+    background-color: #080420;
+    color: white;
+
+}
+.welcomeBody img {
+    height: 30em;
+ 
+}
+.welcomeBody span {
+    font-size: 1.5em;
+    margin-top: .5em;
+    
+}

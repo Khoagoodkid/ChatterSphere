@@ -1,0 +1,32 @@
+.createAccountBody{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+   
+    display: flex;
+    flex-direction: column;
+}
+.loginContainer{
+    width: 100%;
+    background-color: #0c0630;
+    color: white;
+    height: 10%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+.signupContainer{
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: 100%;
+    height: 90%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: #080420;
+    background-image: url('https://scontent.fsgn2-6.fna.fbcdn.net/v/t1.15752-9/299095812_3311679562450634_5159673905095528423_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=ae9488&_nc_ohc=gwfJhX4vV2wAX80Z23Q&_nc_ht=scontent.fsgn2-6.fna&oh=03_AVI9QEootv-n-IZdb03JGUWSjEIcC2NPLbosh9qtd0vxBw&oe=63520847');
+}

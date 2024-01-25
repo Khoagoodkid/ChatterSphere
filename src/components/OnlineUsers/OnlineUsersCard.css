@@ -1,0 +1,19 @@
+.onlineUserCard {
+    display: flex;
+
+    height: auto;
+    padding: 1em;
+
+    width: auto;
+    gap: .5em;
+    align-items: center;
+    border-bottom: .1em solid black;
+    cursor: pointer;
+    padding-left: .5em;
+}
+
+.onlineUserCard:hover {
+    background-color:
+        #814fe3;
+    ;
+}

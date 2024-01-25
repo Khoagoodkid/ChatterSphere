@@ -1,0 +1,36 @@
+.conversationCard {
+    width: auto;
+    height: 4em;
+    /* border-bottom: 0.1em solid black; */
+    display: flex;
+    flex-direction: row;
+    padding: 0.5em;
+    align-items: center;
+    /* background-color: #392988; */
+    background-color: #ffffff34;
+    cursor: pointer;
+    gap: .5em;
+    justify-content: space-between;
+    transition: 0.5s ease-in-out;
+}
+
+.conversationCard:hover {
+    background-color: #814fe3;
+}
+
+.conversationCard .conversationInfo {
+    display: flex;
+    align-items: center;
+    gap: .5em;
+
+    width: auto;
+
+    height: 100%;
+    letter-spacing: .1em;
+      
+}
+
+.conversationCard.selected {
+    /* background-color: #814fe3; */
+    background-color: #9a86f3;
+}

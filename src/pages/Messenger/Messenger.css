@@ -1,0 +1,26 @@
+.messengerBody{
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background-color:  #131324;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.messengerWindow{
+    width: 70%;
+    height: 80%;
+    background-color: white;
+    border-radius: 1em;
+    display: flex;
+    
+   
+}
+@media screen and (max-width:1600px) {
+    .messengerWindow{
+        width: 80%;
+        
+    }
+}

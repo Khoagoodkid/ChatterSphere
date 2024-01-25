@@ -1,0 +1,44 @@
+.formBody{
+    height: auto;
+    width: 38%;
+    background-color: 
+    #0c0630 
+     ;
+    float: right;
+    margin-right: 5em;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5em;
+    border-radius: 0.5em;
+    color: white;
+}
+.formBody .form-group{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+    margin-top: 1em;
+
+}
+.formBody .form-group label{
+    font-weight: bold;
+    font-size: 1.2em;
+}
+.formBody .form-group.form-check{
+    display: flex;
+    flex-direction: row;
+    
+}
+.formBody .form-group .form-control{
+    width: 100%;
+    color: white;
+}
+.formBody .btn.btn-primary{
+    margin-top: 1em;
+    
+}
+.form-group .avatar{
+   
+    
+
+}

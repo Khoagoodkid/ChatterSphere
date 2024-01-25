@@ -1,0 +1,21 @@
+.pinnedMsgCard{
+    width: auto;
+    height: auto;
+   
+    display: flex;
+    flex-direction: row;
+    padding-top: .5em;
+    padding-left: .5em;
+}
+.pinnedMsgCard .msgDisplay{
+    display: flex;
+    flex-direction: column;
+    margin-left: .5em;
+    width: 90%;
+    border-bottom: 0.1em solid lightgrey;
+}
+.pinnedMsgCard .msgDisplay .senderInfo{
+    display: flex;
+    justify-content: space-between;
+    width: auto;
+}
