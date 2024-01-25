@@ -6,7 +6,7 @@ import ChatWindow from '../../components/ChatWindow/ChatWindow'
 import io from 'socket.io-client'
 export const CurrentChatContext = createContext()
 export const OnlineUsersContext = createContext()
-const socket = io('http://localhost:8080/')
+const socket = io('https://chattersphere-server.onrender.com/')
 function Messenger() {
   const { user, setUser } = useContext(AuthContext)
   const [currentChat, setCurrentChat] = useState(null)
