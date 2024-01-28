@@ -68,9 +68,9 @@ function Conversation({ conversation, currentUser, deleteConversations,index,cur
 
         <Avatar src={conversation.members.length > 2 ? conversation.groupPictureUrl : (user?.avatarId)}></Avatar>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', height: '100%', justifyContent: 'center' }}>
-          {conversation.members.length > 2 && <span style={{ textOverflow: 'ellipsis',fontWeight: 'bold'}}>{conversation?.name || 'Group Chat'}</span>}
+          {conversation.members.length > 2 && <span style={{ textOverflow: 'ellipsis',fontWeight: 'bold', textAlign:'left'}}>{conversation?.name || 'Group Chat'}</span>}
           {conversation.members.length == 2 && <span style={{ textOverflow: 'ellipsis',fontWeight: 'bold' }}>{user?.name}</span>}
-          <div style={{ fontSize: '0.85em', color: 'gray', display: 'flex',letterSpacing:'0em' }}>
+          <div style={{ fontSize: '0.85em', color: 'white', display: 'flex',letterSpacing:'0em' }}>
             <span  >{conversation?.latestMsg?.senderId == currentUser._id && 'You:'}</span>
             <span>{conversation?.latestMsg?.text?.substring(0, 6)}</span>
             <span >{conversation?.latestMsg?.text?.length > 6 && '...'}</span>

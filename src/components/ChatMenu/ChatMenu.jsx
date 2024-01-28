@@ -115,7 +115,7 @@ function ChatMenu() {
                         onChange={(e) => setFilteredConversations(filterConversations(e.target.value))}
                     />
                     <AddCommentIcon
-                        sx={{ width: '1em', height: '1em', float: 'right', marginTop: '1em', cursor: 'pointer', color: 'white' }}
+                        sx={{ width: '1em', height: '1em', float: 'right', marginTop: '1em', cursor: 'pointer', color: 'white', }}
                         onClick={() => setOpenModal(true)}
                     />
                 </div>

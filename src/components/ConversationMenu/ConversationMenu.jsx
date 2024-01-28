@@ -324,6 +324,7 @@ function ConversationMenu({ menu, currentChat, setCurrentChat, user }) {
                                     onChange={(e) => setNewGroupName(e.target.value)}
                                 />
                                 <CheckIcon sx={{ cursor: 'pointer' }}
+                                    style={{marginRight:'1em'}}
                                     onClick={() => {
                                         changeGroupName()
                                         sendChangeNoti('changed group name')

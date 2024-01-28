@@ -6,10 +6,10 @@
     flex-direction: column;
     background-color: #080420;
     color: white;
-
+    
 }
 .welcomeBody img {
-    height: 30em;
+    height: 70%;
  
 }
 .welcomeBody span {
