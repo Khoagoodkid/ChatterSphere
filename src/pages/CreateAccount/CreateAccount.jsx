@@ -33,7 +33,7 @@ function CreateAccount() {
             <div className='createAccountBody'>
                 <div className='loginContainer'>
 
-                    <h1 style={{letterSpacing:'.3em'}}>Web Chat</h1>
+                    <h1 style={{letterSpacing:'.1em'}}>Chatter Sphere</h1>
 
                     <Login userList={userList} setUserList={setUserList} />
                 </div>

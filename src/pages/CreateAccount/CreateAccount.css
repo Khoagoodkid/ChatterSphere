@@ -28,5 +28,8 @@
     justify-content: flex-end;
     align-items: center;
     background-color: #080420;
-    background-image: url('https://scontent.fsgn2-6.fna.fbcdn.net/v/t1.15752-9/299095812_3311679562450634_5159673905095528423_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=ae9488&_nc_ohc=gwfJhX4vV2wAX80Z23Q&_nc_ht=scontent.fsgn2-6.fna&oh=03_AVI9QEootv-n-IZdb03JGUWSjEIcC2NPLbosh9qtd0vxBw&oe=63520847');
+    background-image: url('/banner.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: left;
 }
