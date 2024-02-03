@@ -18,6 +18,7 @@ import ChosenImgContainer from '../ChosenImgContainer/ChosenImgContainer'
 import AvatarGroup from '@mui/material/AvatarGroup';
 import Avatar from '@mui/material/Avatar';
 import Welcome from '../Welcome/Welcome'
+import VideoCallIcon from '@mui/icons-material/VideoCall';
 function ChatWindow() {
     const { user, setUser } = useContext(AuthContext)
     const { currentChat, setCurrentChat } = useContext(CurrentChatContext)
@@ -32,6 +33,9 @@ function ChatWindow() {
     const [msgFeature, setMsgFeature] = useState({})
     const [nonGroupName, setNonGroupName] = useState(null)
     const [typingUsers, setTypingUsers] = useState([])
+    const [repMsg, setRepMsg] = useState(null)
+    const repMsgRef = useRef()
+    const [isOpenVidCallWindow, setIsOpenVidCallWindow] = useState(false)
     useEffect(() => {
         setUserList(GetUserList())
     }, [])
@@ -40,6 +44,7 @@ function ChatWindow() {
         getNonGroupName()
         setMenu(false)
         fetchTypingUsers()
+        setRepMsg(null)
     }, [currentChat])
     useEffect(() => {
         typingUserRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -47,6 +52,14 @@ function ChatWindow() {
     useEffect(() => {
         msgRef.current?.scrollIntoView({ behavior: 'smooth' })
     }, [messages])
+    useEffect(() => {
+        repMsgRef.current?.scrollIntoView({ behavior: 'smooth' })
+
+    }, [repMsg])
+
+    const scrollToRepMsg = (id) => {
+        document.getElementById(id)?.scrollIntoView({block: "center", inline: "nearest" });
+    }
 
 
     const sendMsg = (e) => {
@@ -60,13 +73,16 @@ function ChatWindow() {
                 senderId: user._id,
                 conversationId: currentChat._id,
                 createdAt: Date.now(),
-                type: 'text'
+                senderName: user.name,
+                type: 'text',
+                repMsg: repMsg
             })
                 .then(res => {
                     updateConversationDate()
                     updateLatestMsg(text)
                     setText('')
                     remove(ref(database, `typingUsers/${currentChat?._id}/${user._id}`))
+                    setRepMsg(null)
                 })
         }
 
@@ -158,6 +174,9 @@ function ChatWindow() {
             setTypingUsers(typingUsers1)
         })
     }
+    const createVidCall = () => {
+        
+    }
     return (
         <div className='chatWindowBody'>
             <div className='chatWindow'>
@@ -172,6 +191,9 @@ function ChatWindow() {
                     </div>
                     {currentChat &&
                         <div className='features'>
+                            <VideoCallIcon 
+                            onClick={() => createVidCall()}
+                            sx={{ color: 'white', cursor: 'pointer' }} />
                             {menu ? (
                                 <CloseIcon onClick={() => setMenu(false)}
                                     sx={{ color: 'white', cursor: 'pointer' }}
@@ -207,7 +229,13 @@ function ChatWindow() {
                                         <div key={message._id} ref={msgRef} id={message._id}>
 
 
-                                            <Message message={message} currentChat={currentChat} setCurrentChat={setCurrentChat} />
+                                            <Message
+                                                setRepMsg={setRepMsg}
+                                                message={message}
+                                                currentChat={currentChat}
+                                                setCurrentChat={setCurrentChat} 
+                                                scrollToRepMsg={scrollToRepMsg}
+                                                />
 
                                         </div>
                                     )
@@ -221,7 +249,7 @@ function ChatWindow() {
                                             )
                                         })}
                                     </AvatarGroup>
-                                    {typingUsers.length > 0 && <div style={{marginLeft:'.2em'}}>
+                                    {typingUsers.length > 0 && <div style={{ marginLeft: '.2em' }}>
                                         <span style={{ '--i': '2' }} className='typingText'>i</span>
                                         <span style={{ '--i': '3' }} className='typingText'>s</span>
 
@@ -236,8 +264,13 @@ function ChatWindow() {
                                         <span style={{ '--i': '11' }} className='typingText'>.</span>
                                         <span style={{ '--i': '12' }} className='typingText'>.</span>
                                     </div>}
-
+                                    {repMsg &&
+                                        <div style={{ width: '100%' }} ref={repMsgRef}>
+                                            <RepMsgCard repMsg={repMsg} setRepMsg={setRepMsg} user={user}/>
+                                        </div>
+                                    }
                                 </div>
+
 
                             </div>
                         </div>
@@ -248,8 +281,8 @@ function ChatWindow() {
                             chosenImgFile={chosenImgFile}
                             setChosenImgFile={setChosenImgFile}
                         />}
-                        <form className='chatInput' onSubmit={sendMsg}>
 
+                        <form className='chatInput' onSubmit={sendMsg}>
                             <label htmlFor="file-input">
                                 <ImageIcon fontSize='large' style={{ display: 'inline-block', cursor: 'pointer' }} />
 
@@ -281,6 +314,27 @@ function ChatWindow() {
 
                 <ConversationMenu menu={menu} currentChat={currentChat} setCurrentChat={setCurrentChat} user={user} />
             </div>
+        </div>
+    )
+}
+const RepMsgCard = ({ repMsg, setRepMsg, user }) => {
+    const [senderName, setSenderName] = useState(null)
+    useEffect(() => {
+
+        url.get(`users/${repMsg?.senderId}.json`).then(res => {
+            console.log(res)
+            setSenderName(res?.data?.name)
+
+        })
+    }, [repMsg])
+    return (
+        <div className='rep-msg'>
+            <div style={{ position: 'absolute', top: '0', right: '0' }}>
+                <CloseIcon onClick={() => { setRepMsg(null) }} sx={{ color: 'white', cursor: 'pointer' }} />
+            </div>
+            {repMsg.senderName && <span>Replying to {repMsg.senderId == user._id ? "yourself" : repMsg.senderName}</span>}
+            {repMsg.text}
+
         </div>
     )
 }

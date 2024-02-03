@@ -29,6 +29,7 @@
 }
 
 .messagesDisplay {
+
     width: auto;
     height: 100%;
     display: flex;
@@ -55,6 +56,7 @@
     padding-left: 1em;
     padding-right: 1em;
     color: white;
+    position: relative;
 
 }
 
@@ -117,4 +119,25 @@
     40%,100%{
         transform: translateY(0px);
     }
+}
+.rep-msg {
+    /* position: absolute; */
+  
+    width: 100%;
+    margin-left: 0;
+    /* height: 100%; */
+    padding: .5em;
+    margin-left: -.5em;
+    background-color: rgba(227, 183, 247,0.2);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    position: relative;
+
+}
+.rep-msg span {
+    font-weight: bold;
+    font-size: 1.2em;
 }

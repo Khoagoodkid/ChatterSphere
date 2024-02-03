@@ -11,16 +11,17 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-top: 0.5em;
+
     justify-content: flex-end;
     text-align: left;
-    word-wrap: break-word
+    word-wrap: break-word;
+    /* position: relative; */
 }
 
 .messageCard.own {
     float: right;
     align-items: flex-end;
-    text-align: right;
+    text-align: left;
     
 }
 
@@ -28,9 +29,9 @@
     display: flex;
     gap: 0.5em;
     align-items: flex-end;
-    width: 100%;
-    word-wrap: break-word
-
+    width: 40em;
+    word-wrap: break-word;
+    position: relative;
 }
 
 .message.own {
@@ -44,7 +45,7 @@
     color: white;
     font-size: 1.1em;
     /* width:30%; */
-    
+    position: relative;
     /* word-wrap: break-word; */
     
 }
@@ -75,5 +76,39 @@
     color: white;
 
     display: flex;
-    
+    align-items: center;
+    flex-direction: row;
+   
+}
+.repMsg-text {
+    background-color: rgba(227, 183, 247,0.2);
+    color: white;
+    border-radius: .5em;
+    padding: .5em;
+    /* width: 20em; */
+    /* word-wrap: break-word; */
+    white-space: nowrap;
+  overflow-y: hidden;
+  text-overflow: ellipsis;
+}
+.repMsg-bubble-own {
+    position: absolute;
+    bottom: 90%;
+    right: 0;
+    /* left: 100%; */
+    max-width: 18em;
+    min-width: 10em;
+    cursor: pointer;
+}
+.repMsg-bubble {
+    position: absolute;
+    /* top: -100%; */
+    left: 0;
+    max-width: 18em;
+    bottom: 90%;
+    cursor: pointer;
+}
+.repMsg-bubble b, .repMsg-bubble-own b {
+    color: gray;
+    font-size: .8em;
 }

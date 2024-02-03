@@ -6,7 +6,10 @@ import ChatWindow from '../../components/ChatWindow/ChatWindow'
 import io from 'socket.io-client'
 export const CurrentChatContext = createContext()
 export const OnlineUsersContext = createContext()
-const socket = io('https://chattersphere-server.onrender.com/')
+// const socket = io('https://chattersphere-server.onrender.com/')
+
+const socket = io('http://localhost:8080/')
+
 function Messenger() {
   const { user, setUser } = useContext(AuthContext)
   const [currentChat, setCurrentChat] = useState(null)
@@ -15,7 +18,7 @@ function Messenger() {
     socket.emit('addUser', user?._id)
     socket.on('getUsers', users => {
       setOnlineUsers(users)
-      console.log(users)
+      // console.log(users)
     })
 
   }, [user])

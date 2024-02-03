@@ -10,17 +10,19 @@ import ru from 'javascript-time-ago/locale/ru.json'
 import { url } from '../../tools/Database'
 import PushPinIcon from '@mui/icons-material/PushPin';
 import moment from 'moment';
-import {format} from 'timeago.js'
+import { format } from 'timeago.js'
+import ReplyIcon from '@mui/icons-material/Reply';
 // import Moment from 'react-moment';
 // import {moment} from 'react-moment'
 import 'moment-timezone';
 TimeAgo.addDefaultLocale(en)
 TimeAgo.addLocale(ru)
 import DeleteIcon from '@mui/icons-material/Delete';
-function Message({ message, currentChat, setCurrentChat }) {
+function Message({ setRepMsg, message, currentChat, setCurrentChat, scrollToRepMsg }) {
     const [sender, setSender] = useState(null)
     const { user, setUser } = useContext(AuthContext)
     const [msgFeature, setMsgFeature] = useState(false)
+    const repMsg = message.repMsg || ''
     useEffect(() => {
         getSender()
     }, [])
@@ -45,12 +47,15 @@ function Message({ message, currentChat, setCurrentChat }) {
     const deleteMsg = () => {
         url.delete(`messages/${message._id}.json`)
     }
+
     // const date = format(message.createdAt, "MMMM do, yyyy H:mma")
     return (
         <>
             {message.type !== 'changeNoti' ? (
 
-                <div className={user._id === message.senderId ? 'messageCard own' : 'messageCard'}
+                <div 
+                style={{marginTop: repMsg ? '1em' : '.5em'}}
+                className={user._id === message.senderId ? 'messageCard own' : 'messageCard'}
                     onMouseOver={() => {
 
                         setMsgFeature(true)
@@ -61,14 +66,24 @@ function Message({ message, currentChat, setCurrentChat }) {
 
 
 
-                    <div className={user._id === message.senderId ? 'message own' : 'message'}>
+                    <div
+                        style={{ height: repMsg && '8em' }}
+                        className={user._id === message.senderId ? 'message own' : 'message'}>
+
                         <Avatar alt="Remy Sharp"
                             src={user._id === message.senderId ? user.avatarId : sender?.avatarId}
                             sx={{ width: '2em', height: '2em' }}
                         />
                         {message.type == 'text' &&
                             <div className={message.text.length > 20 ? 'text longText' : 'text'}>
-
+                                {repMsg &&
+                                    <div className={user._id === message.senderId ? 'repMsg-bubble-own' : 'repMsg-bubble'} onClick={() => scrollToRepMsg(repMsg._id)}>
+                                        <b>Replied to {repMsg?.senderId == user._id ? "you" : repMsg.senderName}</b>
+                                        <div className='repMsg-text'>
+                                            {repMsg?.text}
+                                        </div>
+                                    </div>
+                                }
                                 <span>{message.text}</span>
                             </div>
                         }
@@ -80,20 +95,27 @@ function Message({ message, currentChat, setCurrentChat }) {
                         <div className='msgFeatures'>
                             {msgFeature && message.senderId == user._id &&
                                 <>
-                                    <PushPinIcon sx={{  cursor: 'pointer' }} onClick={() => pinMsg()} />
-                                    <DeleteIcon  sx={{  cursor: 'pointer' }}onClick={() => deleteMsg()} />
+                                    <DeleteIcon sx={{ cursor: 'pointer' }} onClick={() => deleteMsg()} />
+
                                 </>
                             }
+
+
+
+                            {msgFeature && <>
+                                <ReplyIcon sx={{ cursor: 'pointer' }} onClick={() => setRepMsg(message)} />
+                                <PushPinIcon sx={{ cursor: 'pointer' }} onClick={() => pinMsg()} />
+                            </>}
                         </div>
                     </div>
-                    
-                       {/* <ReactTimeAgo date={new Date(message.createdAt).toLocaleString()} locale='en-us' className='timeago' /> */}
-                        {/* <Moment fromNow>{message.createdAt}</Moment> */}
-                        <span className='timeago'>{format(message.createdAt)}</span>
-                   
+
+                    {/* <ReactTimeAgo date={new Date(message.createdAt).toLocaleString()} locale='en-us' className='timeago' /> */}
+                    {/* <Moment fromNow>{message.createdAt}</Moment> */}
+                    <span className='timeago'>{format(message.createdAt)}</span>
+
                 </div>
             ) : (
-                <div style={{ fontWeight: 'bold',color:'gray' }} >
+                <div style={{ fontWeight: 'bold', color: 'gray' }} >
                     {message.text}
                 </div>
             )}
