@@ -324,7 +324,9 @@ function ChatWindow() {
                         <div className='features'>
                             <VideoCallIcon
                                 onClick={() => createVidCall()}
-                                sx={{ color: 'white', cursor: 'pointer' }} />
+                                sx={{ color: 'white', cursor: 'pointer' }}
+                                fontSize='large'
+                                />
                             {menu ? (
                                 <CloseIcon onClick={() => setMenu(false)}
                                     sx={{ color: 'white', cursor: 'pointer' }}

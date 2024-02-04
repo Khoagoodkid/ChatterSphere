@@ -110,6 +110,6 @@
     cursor: pointer;
 }
 .repMsg-bubble b, .repMsg-bubble-own b {
-    color: gray;
+    color: white;
     font-size: .8em;
 }
