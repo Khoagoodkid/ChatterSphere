@@ -396,11 +396,6 @@ function ChatWindow() {
                                         <span style={{ '--i': '12' }} className='typingText'>.</span>
                                     </div>}
                                 </div>
-                                {repMsg &&
-                                    <div style={{ width: '100%', position: 'absolute', bottom: '0', left: '-1em', }} classNameref={repMsgRef}>
-                                        <RepMsgCard repMsg={repMsg} setRepMsg={setRepMsg} user={user} />
-                                    </div>
-                                }
 
 
                             </div>
@@ -414,6 +409,11 @@ function ChatWindow() {
                         />}
 
                         <form className='chatInput' onSubmit={sendMsg}>
+                            {repMsg &&
+                                <div style={{ width: '100%', position: 'absolute', bottom: '100%', left: '0' }} ref={repMsgRef}>
+                                    <RepMsgCard repMsg={repMsg} setRepMsg={setRepMsg} user={user} />
+                                </div>
+                            }
                             <label htmlFor="file-input">
                                 <ImageIcon fontSize='large' style={{ display: 'inline-block', cursor: 'pointer' }} />
 
@@ -450,20 +450,23 @@ function ChatWindow() {
 }
 const RepMsgCard = ({ repMsg, setRepMsg, user }) => {
     const [senderName, setSenderName] = useState(null)
-    useEffect(() => {
-
-        url.get(`users/${repMsg?.senderId}.json`).then(res => {
-            console.log(res)
-            setSenderName(res?.data?.name)
+    const getSenderName = async () => {
+        let sender
+        await url.get(`users/${repMsg?.senderId}.json`).then(res => {
+            sender = res.data
 
         })
+        if (sender) setSenderName(sender.name)
+    }
+    useEffect(() => {
+        getSenderName()
     }, [repMsg])
     return (
         <div className='rep-msg'>
             <div style={{ position: 'absolute', top: '0', right: '1em' }}>
                 <CloseIcon onClick={() => { setRepMsg(null) }} sx={{ color: 'white', cursor: 'pointer' }} />
             </div>
-            {repMsg.senderName && <span>Replying to {repMsg.senderId == user._id ? "yourself" : repMsg.senderName}</span>}
+            {<span>Replying to {repMsg.senderId == user._id ? "yourself" : (repMsg.senderName || senderName)}</span>}
             {repMsg.text}
 
         </div>

@@ -23,9 +23,23 @@ function Message({ setRepMsg, message, currentChat, setCurrentChat, scrollToRepM
     const { user, setUser } = useContext(AuthContext)
     const [msgFeature, setMsgFeature] = useState(false)
     const repMsg = message.repMsg || ''
+    const [repMsgSender, setRepMsgSender] = useState(null)
+    
     useEffect(() => {
         getSender()
+        getRepMsgSender()
     }, [])
+    const getRepMsgSender = async () => {
+        let sender 
+        await url.get(`users/${repMsg.senderId}.json`).then(res => {
+            sender = res.data
+        })
+
+        if(sender) {
+    
+            setRepMsgSender(sender)
+        }
+    }
     const updateCurrentChat = () => {
         url.get(`conversations/${message.conversationId}.json`).then(res => {
             setCurrentChat(res.data)
@@ -78,7 +92,7 @@ function Message({ setRepMsg, message, currentChat, setCurrentChat, scrollToRepM
                             <div className={message.text.length > 20 ? 'text longText' : 'text'}>
                                 {repMsg &&
                                     <div className={user._id === message.senderId ? 'repMsg-bubble-own' : 'repMsg-bubble'} onClick={() => scrollToRepMsg(repMsg._id)}>
-                                        <b>Replied to {repMsg?.senderId == user._id ? "you" : repMsg.senderName}</b>
+                                        <b>Replied to {repMsg?.senderId == user._id ? "you" : (repMsg.senderName || repMsgSender?.name)}</b>
                                         <div className='repMsg-text'>
                                             {repMsg?.text}
                                         </div>
