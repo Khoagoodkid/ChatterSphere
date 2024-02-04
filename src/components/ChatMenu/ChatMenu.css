@@ -30,7 +30,7 @@
 
 .userInfo {
     height: 100%;
-
+    gap: .5em;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -39,7 +39,7 @@
 
 .userInfo span {
     font-size: 1.2em;
-    margin-left: .2em;
+    /* margin-left: .2em; */
 }
 
 .bodyMenu {

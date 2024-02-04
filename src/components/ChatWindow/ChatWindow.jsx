@@ -218,12 +218,17 @@ function ChatWindow() {
             }
         })
     }
-    const getNonGroupName = () => {
+    const getNonGroupName = async () => {
+        if(currentChat?.members.length > 2 ) return
         const friendId = currentChat?.members.find(memberId => {
             return memberId != user._id
         })
-        url.get(`users/${friendId}.json`).then(res => {
+        await url.get(`users/${friendId}.json`).then(res => {
+          
             setNonGroupName(res?.data?.name)
+            url.patch(`conversations/${currentChat._id}.json`, {
+               name:res?.data?.name
+            })
 
         })
 

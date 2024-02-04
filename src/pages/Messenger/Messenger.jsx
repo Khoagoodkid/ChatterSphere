@@ -33,7 +33,7 @@ function Messenger() {
   }, [])
   return (
     <div className='messengerBody'>
-      <div className='messengerWindow'>
+      {/* <div className='messengerWindow'> */}
         <CurrentChatContext.Provider value={{ currentChat, setCurrentChat }}>
           <SocketContext.Provider value={socket}>
 
@@ -45,7 +45,7 @@ function Messenger() {
           </SocketContext.Provider>
         </CurrentChatContext.Provider>
 
-      </div>
+      {/* </div> */}
 
     </div>
   )
