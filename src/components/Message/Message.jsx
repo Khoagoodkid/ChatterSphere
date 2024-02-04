@@ -115,7 +115,7 @@ function Message({ setRepMsg, message, currentChat, setCurrentChat, scrollToRepM
 
                 </div>
             ) : (
-                <div style={{ fontWeight: 'bold', color: 'gray' }} >
+                <div style={{ fontWeight: 'bold', color: 'white' }} >
                     {message.text}
                 </div>
             )}

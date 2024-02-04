@@ -4,6 +4,7 @@ import './Messenger.css'
 import ChatMenu from '../../components/ChatMenu/ChatMenu'
 import ChatWindow from '../../components/ChatWindow/ChatWindow'
 import io from 'socket.io-client'
+export const SocketContext = createContext()
 export const CurrentChatContext = createContext()
 export const OnlineUsersContext = createContext()
 // const socket = io('https://chattersphere-server.onrender.com/')
@@ -20,21 +21,32 @@ function Messenger() {
       setOnlineUsers(users)
       // console.log(users)
     })
+    socket.on("hideCamSignal", res => {
+      console.log(res)
+    })
 
   }, [user])
+  useEffect(() => {
+    socket.on("incomingCall", caller => {
+      console.log(caller)
+    })
+  }, [])
   return (
     <div className='messengerBody'>
       <div className='messengerWindow'>
         <CurrentChatContext.Provider value={{ currentChat, setCurrentChat }}>
-          <OnlineUsersContext.Provider value ={onlineUsers}>
-            <ChatMenu />
-            <ChatWindow />
+          <SocketContext.Provider value={socket}>
 
-          </OnlineUsersContext.Provider>
+            <OnlineUsersContext.Provider value={onlineUsers}>
+              <ChatMenu />
+              <ChatWindow />
+
+            </OnlineUsersContext.Provider>
+          </SocketContext.Provider>
         </CurrentChatContext.Provider>
 
       </div>
-      
+
     </div>
   )
 }

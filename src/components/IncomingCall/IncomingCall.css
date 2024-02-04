@@ -1,0 +1,38 @@
+.incoming-body {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.incoming-body .incoming-wrapper{
+    /* height: 25em; */
+    background-color: #111;
+    width: 20em;
+    color: white;
+    display: flex;
+    padding: 1.5em;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2em;
+    border-radius: 1.5em;
+}
+.incoming-wrapper .caller-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.caller-info span {
+    font-size: 1.3em;
+}
+.caller-info e {
+    color: lightgray;
+}
+.incoming-wrapper .answer {
+    display: flex;
+    gap: 1em;
+}

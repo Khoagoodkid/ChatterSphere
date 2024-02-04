@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect, useRef } from 'react'
 import './ChatWindow.css'
-import { CurrentChatContext } from '../../pages/Messenger/Messenger'
+import { CurrentChatContext, SocketContext } from '../../pages/Messenger/Messenger'
 import { url } from '../../tools/Database'
 import { AuthContext } from '../../context/AuthContext'
 import { database, ref, push, onValue } from '../../tools/firebase'
@@ -13,15 +13,19 @@ import CloseIcon from '@mui/icons-material/Close';
 import ConversationMenu from '../ConversationMenu/ConversationMenu'
 import GetUserList from '../../tools/GetUserList'
 import ImageIcon from '@mui/icons-material/Image';
-
+import { v1 as uuid } from "uuid";
 import ChosenImgContainer from '../ChosenImgContainer/ChosenImgContainer'
 import AvatarGroup from '@mui/material/AvatarGroup';
 import Avatar from '@mui/material/Avatar';
 import Welcome from '../Welcome/Welcome'
 import VideoCallIcon from '@mui/icons-material/VideoCall';
+import VideoCall from '../VideoCall/VideoCall'
+import Peer from 'peerjs'
+import IncomingCall from '../IncomingCall/IncomingCall'
 function ChatWindow() {
     const { user, setUser } = useContext(AuthContext)
     const { currentChat, setCurrentChat } = useContext(CurrentChatContext)
+    const socket = useContext(SocketContext)
     const [text, setText] = useState('')
     const [messages, setMessages] = useState([])
     const [menu, setMenu] = useState(false)
@@ -36,6 +40,83 @@ function ChatWindow() {
     const [repMsg, setRepMsg] = useState(null)
     const repMsgRef = useRef()
     const [isOpenVidCallWindow, setIsOpenVidCallWindow] = useState(false)
+    const [roomId, setRoomId] = useState(null)
+    const [peerId, setPeerId] = useState('');
+    const [remotePeerIdValue, setRemotePeerIdValue] = useState('');
+    const remoteVideoRef = useRef(null);
+    const currentUserVideoRef = useRef(null);
+    const peerInstance = useRef(null);
+    const callInstance = useRef(null)
+    const [receiver, setReceiver] = useState(null)
+    const [isIncomingCall, setIsIncomingCall] = useState(false)
+    const [callerPeerId, setCallerPeerId] = useState(null)
+    useEffect(() => {
+        if (!user) return
+        // console.log(user.peerId)
+        const peer = new Peer(user.peerId);
+        peer.on('open', (id) => {
+            console.log(id)
+            setPeerId(id)
+
+        });
+        peer.on('error', err => {
+            console.error(err);
+        });
+
+        peer.on('call', (call) => {
+            setCallerPeerId(call.peer)
+            callInstance.current = call
+            setIsIncomingCall(true)
+
+
+
+        })
+
+        peerInstance.current = peer;
+        return () => {
+            peer.destroy()
+        }
+    }, [])
+    useEffect(() => {
+        if (isIncomingCall) document.getElementById("incoming_sound").play()
+        else document.getElementById("incoming_sound").pause()
+    }, [isIncomingCall])
+    const answerCall = () => {
+
+        var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+        setIsOpenVidCallWindow(true)
+        setIsIncomingCall(false)
+        getUserMedia({ video: true, audio: true }, (mediaStream) => {
+            currentUserVideoRef.current.srcObject = mediaStream;
+            currentUserVideoRef.current.play();
+            callInstance.current.answer(mediaStream)
+            callInstance.current.on('stream', function (remoteStream) {
+                remoteVideoRef.current.srcObject = remoteStream
+                remoteVideoRef.current.play();
+            });
+        });
+    }
+
+    const call = (remotePeerId) => {
+        var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+        getUserMedia({ video: true, audio: true }, (mediaStream) => {
+
+            currentUserVideoRef.current.srcObject = mediaStream;
+            currentUserVideoRef.current.play();
+
+            const call = peerInstance.current.call(remotePeerId, mediaStream)
+
+            call.on('stream', (remoteStream) => {
+                remoteVideoRef.current.srcObject = remoteStream
+                remoteVideoRef.current.play();
+            });
+
+            callInstance.current = call
+        });
+    }
+
+
     useEffect(() => {
         setUserList(GetUserList())
     }, [])
@@ -58,7 +139,7 @@ function ChatWindow() {
     }, [repMsg])
 
     const scrollToRepMsg = (id) => {
-        document.getElementById(id)?.scrollIntoView({block: "center", inline: "nearest" });
+        document.getElementById(id)?.scrollIntoView({ block: "center", inline: "nearest" });
     }
 
 
@@ -170,15 +251,65 @@ function ChatWindow() {
                     typingUsers1.push(d.val())
                 }
             })
-            console.log(typingUsers1)
+
             setTypingUsers(typingUsers1)
         })
     }
-    const createVidCall = () => {
-        
+    useEffect(() => {
+
+    }, [])
+
+    const createVidCall = async () => {
+        const receiverID = currentChat?.members.find(m => m != user._id)
+        let peerId = null
+        await url.get(`/users/${receiverID}.json`).then((res) => {
+            peerId = res.data.peerId
+            setReceiver({
+                ...res.data,
+                _id: receiverID
+            })
+            // console.log(res.data)
+
+        })
+        socket.emit("callOn", {
+            receiverID,
+            caller: user
+        })
+        if (peerId) {
+            console.log(peerId)
+            call(peerId)
+        }
+
+        setIsOpenVidCallWindow(true)
+
+        // setIsIncomingCall(false)
     }
     return (
         <div className='chatWindowBody'>
+            <audio src={'/sound/incoming_call.mp3'}
+                id="incoming_sound"
+                loop
+                hidden
+            />
+            <IncomingCall
+                isOpen={isIncomingCall}
+                setIsIncomingCall={setIsIncomingCall}
+                setIsOpenVidCallWindow={setIsOpenVidCallWindow}
+                callerPeerId={callerPeerId}
+                userList={userList}
+                answerCall={answerCall}
+            />
+
+            <VideoCall
+                isOpen={isOpenVidCallWindow}
+                receiver={receiver}
+                setIsOpen={setIsOpenVidCallWindow}
+                currentUserVideoRef={currentUserVideoRef}
+                remoteVideoRef={remoteVideoRef}
+                peerInstance={peerInstance}
+                callInstance={callInstance}
+
+            />
             <div className='chatWindow'>
 
                 <div className='topChatWindow'>
@@ -191,9 +322,9 @@ function ChatWindow() {
                     </div>
                     {currentChat &&
                         <div className='features'>
-                            <VideoCallIcon 
-                            onClick={() => createVidCall()}
-                            sx={{ color: 'white', cursor: 'pointer' }} />
+                            <VideoCallIcon
+                                onClick={() => createVidCall()}
+                                sx={{ color: 'white', cursor: 'pointer' }} />
                             {menu ? (
                                 <CloseIcon onClick={() => setMenu(false)}
                                     sx={{ color: 'white', cursor: 'pointer' }}
@@ -233,9 +364,9 @@ function ChatWindow() {
                                                 setRepMsg={setRepMsg}
                                                 message={message}
                                                 currentChat={currentChat}
-                                                setCurrentChat={setCurrentChat} 
+                                                setCurrentChat={setCurrentChat}
                                                 scrollToRepMsg={scrollToRepMsg}
-                                                />
+                                            />
 
                                         </div>
                                     )
@@ -264,12 +395,12 @@ function ChatWindow() {
                                         <span style={{ '--i': '11' }} className='typingText'>.</span>
                                         <span style={{ '--i': '12' }} className='typingText'>.</span>
                                     </div>}
-                                    {repMsg &&
-                                        <div style={{ width: '100%' }} ref={repMsgRef}>
-                                            <RepMsgCard repMsg={repMsg} setRepMsg={setRepMsg} user={user}/>
-                                        </div>
-                                    }
                                 </div>
+                                {repMsg &&
+                                    <div style={{ width: '100%', position: 'absolute', bottom: '0', left: '-1em', }} classNameref={repMsgRef}>
+                                        <RepMsgCard repMsg={repMsg} setRepMsg={setRepMsg} user={user} />
+                                    </div>
+                                }
 
 
                             </div>
@@ -329,7 +460,7 @@ const RepMsgCard = ({ repMsg, setRepMsg, user }) => {
     }, [repMsg])
     return (
         <div className='rep-msg'>
-            <div style={{ position: 'absolute', top: '0', right: '0' }}>
+            <div style={{ position: 'absolute', top: '0', right: '1em' }}>
                 <CloseIcon onClick={() => { setRepMsg(null) }} sx={{ color: 'white', cursor: 'pointer' }} />
             </div>
             {repMsg.senderName && <span>Replying to {repMsg.senderId == user._id ? "yourself" : repMsg.senderName}</span>}

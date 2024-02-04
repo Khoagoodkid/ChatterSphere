@@ -1,0 +1,92 @@
+.vid-body {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    /* width: 100%; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* height: 100%; */
+}
+
+.vid-wrapper {
+    position: relative;
+    padding: 2em;
+    width: 90%;
+    background-color: #111;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 1.5em;
+}
+
+.vid-wrapper .vid-window {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    gap: 2em;
+    height: 70%;
+    /* background-color: red; */
+
+}
+
+.vid-window .vid-frame {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    position: relative;
+}
+
+.vid-frame video {
+    height: 100%;
+    border-radius: 3em;
+    /* border: 2px solid green; */
+    /* position: relative; */
+}
+
+.vid-frame:before {
+
+    content: "";
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(-45deg, #fefedf 0%, #c493ff 100% );
+    transform: translate3d(-7px, 20px, 0) scale(0.95);
+    filter: blur(20px);
+    opacity: var(0.7);
+    transition: opacity 0.3s;
+    border-radius: inherit;
+    
+}
+.vid-frame:after {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: inherit;
+    border-radius: inherit;
+}
+.vid-wrapper .features {
+    /* background-color: red; */
+    color: black;
+    height: 20%;
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    justify-content: center;
+    align-items: center;
+}
+
+

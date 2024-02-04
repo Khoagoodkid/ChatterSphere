@@ -11,7 +11,8 @@ function GetUserList() {
                 name:res.data[key].name,
                 password:res.data[key].password,
                 _id:key,
-                avatarId:res.data[key].avatarId
+                avatarId:res.data[key].avatarId,
+                peerId: res.data[key].peerId
             })
         }
     }) 

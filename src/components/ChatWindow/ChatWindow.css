@@ -126,8 +126,8 @@
     width: 100%;
     margin-left: 0;
     /* height: 100%; */
-    padding: .5em;
-    margin-left: -.5em;
+    padding-left: 1.5em;
+    /* margin-left: -.5em; */
     background-color: rgba(227, 183, 247,0.2);
     color: white;
     display: flex;
@@ -135,6 +135,8 @@
     align-items: start;
     justify-content: center;
     position: relative;
+    padding-top: .5em;
+    padding-bottom: .5em;
 
 }
 .rep-msg span {
