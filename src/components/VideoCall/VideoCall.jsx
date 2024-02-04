@@ -46,12 +46,12 @@ function VideoCall({ isOpen, receiver, setIsOpen, currentUserVideoRef, remoteVid
                 <div className='vid-window'>
                     <div className='vid-frame own'>
                         {/* <button onClick={() => currentUserVideoRef.current.play()}>ddd</button> */}
-                        <video ref={currentUserVideoRef} autoPlay muted
+                        <video ref={currentUserVideoRef} autoPlay 
                             hidden={isCamHidden}
                         />
                     </div>
                     <div className='vid-frame oppo'>
-                        <video ref={remoteVideoRef} autoPlay muted />
+                        <video ref={remoteVideoRef} autoPlay  />
                     </div>
                 </div>
                 <div className='features'>
