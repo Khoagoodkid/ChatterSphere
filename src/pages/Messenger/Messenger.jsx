@@ -7,9 +7,9 @@ import io from 'socket.io-client'
 export const SocketContext = createContext()
 export const CurrentChatContext = createContext()
 export const OnlineUsersContext = createContext()
-// const socket = io('https://chattersphere-server.onrender.com/')
+const socket = io('https://chattersphere-server.onrender.com/')
 
-const socket = io('http://localhost:8080/')
+// const socket = io('http://localhost:8080/')
 
 function Messenger() {
   const { user, setUser } = useContext(AuthContext)
