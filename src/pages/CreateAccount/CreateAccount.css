@@ -11,7 +11,10 @@
 }
 .loginContainer{
     width: 100%;
-    background-color: #0c0630;
+    /* background-color: #0c0630; */
+    /* background-color: #FEEEDF; */
+    background: linear-gradient(90deg, rgba(173,36,30,1) 0%, rgba(115,24,32,1) 26%, rgba(2,0,36,1) 49%, rgba(65,13,34,1) 61%, rgba(96,20,32,1) 72%, rgba(211,44,28,1) 100%, rgba(0,212,255,1) 100%);
+    /* color: black; */
     color: white;
     height: 10%;
     display: flex;
@@ -27,8 +30,9 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    background-color: #080420;
-    background-image: url('/banner.png');
+    /* background-color: #080420; */
+    background-color: #d42c1f;
+    background-image: url('https://i.pinimg.com/originals/99/1f/cb/991fcb466820637e0ab2453cb33cb212.gif');
     background-repeat: no-repeat;
     background-size: contain;
     background-position: left;

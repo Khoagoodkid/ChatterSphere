@@ -8,10 +8,10 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { url } from '../../tools/Database'
 import GetUserList from '../../tools/GetUserList'
 import { storage } from '../../tools/firebase'
-import { ref,uploadBytes, listAll, getDownloadURL } from 'firebase/storage'
+import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage'
 import { v4 } from 'uuid'
 import { avatarRef } from '../../tools/GetAvatar'
-import {v1 as uuid} from 'uuid'
+import { v1 as uuid } from 'uuid'
 function SignUp({ userList, setUserList }) {
     const [imgId, setImgId] = useState(null)
     const [avatar, setAvatar] = useState(null)
@@ -39,23 +39,14 @@ function SignUp({ userList, setUserList }) {
         } else if (sameAccount) {
             alert('This email has been used!')
         } else {
-
             uploadAvatar(imgId)
-
-          
-
-
-
-
-
-
         }
     }
     const checkHandle = (e) => {
 
     }
     const uploadAvatar = (imgId) => {
-        let avatarUrl 
+        let avatarUrl
 
         uploadBytes(ref(storage, `images/${imgId}`), avatar).then(() => {
 
@@ -76,11 +67,11 @@ function SignUp({ userList, setUserList }) {
                                 name: '',
                                 password: '',
                                 avatarId: ''
-        
+
                             })
                             setUserList(GetUserList())
                         })
-                    
+
                 })
             })
 
@@ -90,7 +81,7 @@ function SignUp({ userList, setUserList }) {
 
     return (
         <form className="formBody" onSubmit={submitHandler} >
-
+                <h2>Sign Up</h2>
             <div className="form-group">
                 <label for="exampleInputEmail1">Email address</label>
                 <FilledInput

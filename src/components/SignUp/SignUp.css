@@ -1,9 +1,11 @@
 .formBody{
     height: auto;
     width: 38%;
-    background-color: 
+    /* background-color: 
     #0c0630 
-     ;
+     ; */
+     background: linear-gradient(90deg, rgba(173,36,30,1) 0%, rgba(115,24,32,1) 41%, rgba(65,13,34,1) 84%, rgba(96,20,32,1) 100%, rgba(211,44,28,1) 100%, rgba(0,212,255,1) 100%);
+     /* color: black; */
     float: right;
     margin-right: 5em;
     display: flex;
