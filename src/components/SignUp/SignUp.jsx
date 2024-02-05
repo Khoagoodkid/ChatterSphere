@@ -11,6 +11,7 @@ import { storage } from '../../tools/firebase'
 import { ref,uploadBytes, listAll, getDownloadURL } from 'firebase/storage'
 import { v4 } from 'uuid'
 import { avatarRef } from '../../tools/GetAvatar'
+import {v1 as uuid} from 'uuid'
 function SignUp({ userList, setUserList }) {
     const [imgId, setImgId] = useState(null)
     const [avatar, setAvatar] = useState(null)
@@ -66,7 +67,8 @@ function SignUp({ userList, setUserList }) {
                 getDownloadURL(userAvatar).then(url1 => {
                     url.post('/users.json', {
                         ...account,
-                        avatarId: url1
+                        avatarId: url1,
+                        peerId: uuid()
                     })
                         .then(() => {
                             setAccount({

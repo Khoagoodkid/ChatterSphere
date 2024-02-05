@@ -11,7 +11,7 @@ import MicOffIcon from '@mui/icons-material/MicOff';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import VideocamOffIcon from '@mui/icons-material/VideocamOff';
 import { SocketContext } from '../../pages/Messenger/Messenger';
-function VideoCall({ isOpen, receiver, setIsOpen, currentUserVideoRef, remoteVideoRef, peerInstance, callInstance }) {
+function VideoCall({ isOpen, receiver, setIsOpen, currentUserVideoRef, remoteVideoRef, peerInstance, callInstance,notifyPartner }) {
     const socket = useContext(SocketContext)
     const hangUp = () => {
         callInstance.current.close()
@@ -29,9 +29,7 @@ function VideoCall({ isOpen, receiver, setIsOpen, currentUserVideoRef, remoteVid
     const hideCam = () => {
     
         setIsCamHidden(!isCamHidden)
-        socket.emit("hideCam" , {
-            receiverID: receiver._id
-        })
+        notifyPartner("hideCam")
     }
     return (
 

@@ -50,12 +50,14 @@ function ChatWindow() {
     const [receiver, setReceiver] = useState(null)
     const [isIncomingCall, setIsIncomingCall] = useState(false)
     const [callerPeerId, setCallerPeerId] = useState(null)
+    const [isParterCamHidden, setIsParterCamHidden] = useState(false)
+    const connRef = useRef(null)
     useEffect(() => {
         if (!user) return
         // console.log(user.peerId)
         const peer = new Peer(user.peerId);
         peer.on('open', (id) => {
-            console.log(id)
+
             setPeerId(id)
 
         });
@@ -81,9 +83,27 @@ function ChatWindow() {
         if (isIncomingCall) document.getElementById("incoming_sound").play()
         else document.getElementById("incoming_sound").pause()
     }, [isIncomingCall])
-    const answerCall = () => {
+    useEffect(() => {
+        if (connRef.current) {
+            console.log(connRef.current)
+            connRef.current.on('data', (data) => {
+                if (data.action === 'hideCam') {
+                    console.log('Partner has muted their audio.');
+                    // Update the UI or state accordingly, e.g., set a state to show a mute icon
+                } else if (data.action === 'unmute') {
+                    console.log('Partner has unmuted their audio.');
+                    // Update the UI or state accordingly, e.g., remove the mute icon
+                }
+            });
+        }
+    }, [connRef.current])
+    const notifyPartner = (action) => {
+        connRef.current.send({ action: action });
+    }
 
+    const answerCall = () => {
         var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+        connRef.current = peerInstance.current.connect(callerPeerId)
         setIsOpenVidCallWindow(true)
         setIsIncomingCall(false)
         getUserMedia({ video: true, audio: true }, (mediaStream) => {
@@ -99,6 +119,7 @@ function ChatWindow() {
 
     const call = (remotePeerId) => {
         var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+        connRef.current = peerInstance.current.connect(remotePeerId)
 
         getUserMedia({ video: true, audio: true }, (mediaStream) => {
 
@@ -219,15 +240,15 @@ function ChatWindow() {
         })
     }
     const getNonGroupName = async () => {
-        if(currentChat?.members.length > 2 ) return
+        if (currentChat?.members.length > 2) return
         const friendId = currentChat?.members.find(memberId => {
             return memberId != user._id
         })
         await url.get(`users/${friendId}.json`).then(res => {
-          
+
             setNonGroupName(res?.data?.name)
             url.patch(`conversations/${currentChat._id}.json`, {
-               name:res?.data?.name
+                name: res?.data?.name
             })
 
         })
@@ -276,10 +297,7 @@ function ChatWindow() {
             // console.log(res.data)
 
         })
-        socket.emit("callOn", {
-            receiverID,
-            caller: user
-        })
+
         if (peerId) {
             console.log(peerId)
             call(peerId)
@@ -303,6 +321,7 @@ function ChatWindow() {
                 callerPeerId={callerPeerId}
                 userList={userList}
                 answerCall={answerCall}
+
             />
 
             <VideoCall
@@ -313,7 +332,7 @@ function ChatWindow() {
                 remoteVideoRef={remoteVideoRef}
                 peerInstance={peerInstance}
                 callInstance={callInstance}
-
+                notifyPartner={notifyPartner}
             />
             <div className='chatWindow'>
 
@@ -331,7 +350,7 @@ function ChatWindow() {
                                 onClick={() => createVidCall()}
                                 sx={{ color: 'white', cursor: 'pointer' }}
                                 fontSize='large'
-                                />
+                            />
                             {menu ? (
                                 <CloseIcon onClick={() => setMenu(false)}
                                     sx={{ color: 'white', cursor: 'pointer' }}

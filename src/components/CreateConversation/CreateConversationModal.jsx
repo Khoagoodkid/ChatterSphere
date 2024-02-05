@@ -58,12 +58,12 @@ function CreateConversationModal({ isOpenModal, setIsOpenModal, conversations })
 
        
         let check = false
-        // if ([...membersId, user._id].length == 2) {
-        //     check = conversations.some(c => {
-        //         return JSON.stringify(c.members.sort()) == JSON.stringify([...membersId, user._id].sort())
-        //     })
+        if ([...membersId, user._id].length == 2) {
+            check = conversations.some(c => {
+                return JSON.stringify(c.members.sort()) == JSON.stringify([...membersId, user._id].sort())
+            })
 
-        // }
+        }
         if (!check) {
             let noGroupName
             if (members.length + 1 > 2 && !groupName) {
@@ -81,17 +81,17 @@ function CreateConversationModal({ isOpenModal, setIsOpenModal, conversations })
                 setIsOpenModal(false)
                 
             })
-            push(ref(database, 'conversations'), {
-                members: [...membersId, user._id],
-                createdAt: new Date().toLocaleString(),
-                updatedAt: new Date().toLocaleString(),
-                name: groupName || noGroupName || '',
-                typingUsers:[]
-            })
-                .then(res => {
-                    setIsOpenModal(false)
+            // push(ref(database, 'conversations'), {
+            //     members: [...membersId, user._id],
+            //     createdAt: new Date().toLocaleString(),
+            //     updatedAt: new Date().toLocaleString(),
+            //     name: groupName || noGroupName || '',
+            //     typingUsers:[]
+            // })
+            //     .then(res => {
+            //         setIsOpenModal(false)
 
-                })
+            //     })
         }
     }
     return (
