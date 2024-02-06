@@ -464,7 +464,7 @@ function ChatWindow() {
                             }
                                 value={text}
                             />
-                            <div style={{ position: 'relative' }}>
+                            <div style={{ position: 'relative',display:'flex', alignItems:'center' }}>
                                 <Picker open={showPicker} style={{ position: 'absolute', bottom: '120%', right: '10%' }}
                                     onEmojiClick={onEmojiClick}
                                 />
