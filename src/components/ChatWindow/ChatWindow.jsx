@@ -22,6 +22,8 @@ import VideoCallIcon from '@mui/icons-material/VideoCall';
 import VideoCall from '../VideoCall/VideoCall'
 import Peer from 'peerjs'
 import IncomingCall from '../IncomingCall/IncomingCall'
+import Picker from 'emoji-picker-react';
+import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 function ChatWindow() {
     const { user, setUser } = useContext(AuthContext)
     const { currentChat, setCurrentChat } = useContext(CurrentChatContext)
@@ -51,6 +53,7 @@ function ChatWindow() {
     const [isIncomingCall, setIsIncomingCall] = useState(false)
     const [callerPeerId, setCallerPeerId] = useState(null)
     const [isParterCamHidden, setIsParterCamHidden] = useState(false)
+    const [showPicker, setShowPicker] = useState(false);
     const connRef = useRef(null)
     useEffect(() => {
         if (!user) return
@@ -185,6 +188,7 @@ function ChatWindow() {
                     setText('')
                     remove(ref(database, `typingUsers/${currentChat?._id}/${user._id}`))
                     setRepMsg(null)
+                    setShowPicker(false)
                 })
         }
 
@@ -307,6 +311,11 @@ function ChatWindow() {
 
         // setIsIncomingCall(false)
     }
+    const onEmojiClick = (emojiObject) => {
+        setText((prevInput) => prevInput + emojiObject.emoji);
+
+    };
+
     return (
         <div className='chatWindowBody'>
             <audio src={'/sound/incoming_call.mp3'}
@@ -455,6 +464,16 @@ function ChatWindow() {
                             }
                                 value={text}
                             />
+                            <div style={{ position: 'relative' }}>
+                                <Picker open={showPicker} style={{ position: 'absolute', bottom: '120%', right: '10%' }}
+                                    onEmojiClick={onEmojiClick}
+                                />
+                                <EmojiEmotionsIcon onClick={() => setShowPicker(!showPicker)}
+                                    fontSize='large'
+                                    sx={{ color: 'white', cursor: 'pointer' }}
+                                />
+                            </div>
+
                             <SendIcon type='submit'
                                 fontSize='large'
                                 sx={{ color: 'white', cursor: 'pointer' }}

@@ -32,7 +32,8 @@
     align-items: center;
     /* background-color: #080420; */
     background-color: #d42c1f;
-    background-image: url('https://i.pinimg.com/originals/99/1f/cb/991fcb466820637e0ab2453cb33cb212.gif');
+    /* background-image: url('https://i.pinimg.com/originals/99/1f/cb/991fcb466820637e0ab2453cb33cb212.gif'); */
+    background-image: url('/banner_2.gif');
     background-repeat: no-repeat;
     background-size: contain;
     background-position: left;
